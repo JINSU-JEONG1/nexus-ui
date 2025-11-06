@@ -1,18 +1,18 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>홈 페이지</h1>
+    <p>Nexus UI v3에 오신 것을 환영합니다!</p>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+// 페이지 로직
 </script>
+
+<style scoped>
+.home {
+  text-align: center;
+  padding: 2rem;
+}
+</style>
+
