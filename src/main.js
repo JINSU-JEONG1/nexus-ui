@@ -1,11 +1,12 @@
-import './assets/main.css'
-
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import Vue from 'vue'
 import App from './App.vue'
+import router from './router'
+import store from './store'
 
-const app = createApp(App)
-const pinia = createPinia()
+Vue.config.productionTip = false
 
-app.use(pinia)
-app.mount('#app')
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
