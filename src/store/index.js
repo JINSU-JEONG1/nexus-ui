@@ -1,17 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { defineStore } from 'pinia';
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-  },
+export default defineStore('common', {
+  state: () => ({ count: 0, name: 'Eduardo' }),
   getters: {
-  },
-  mutations: {
+    doubleCount: (state) => state.count * 2,
   },
   actions: {
+    increment() {
+      this.count++
+    },
   },
-  modules: {
-  }
 })
