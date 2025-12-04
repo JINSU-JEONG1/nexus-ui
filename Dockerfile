@@ -1,5 +1,5 @@
 # frontend/Dockerfile
-# 빌드 스테이지
+# 빌드 환경 (Build Stage)
 FROM node:18-alpine AS builder
 # 컨테이너에서 /app 을 작업디렉토리로 설정
 WORKDIR /app
@@ -19,7 +19,6 @@ FROM nginx:stable-alpine
 # 작업 디렉토리 설정
 WORKDIR /usr/src/app
 # 빌드 스테이지에서 생성된 정적 파일을 최종 실행 환경으로 복사
-COPY --from=build-stage /app/dist /usr/src/app/dist
 COPY --from=builder /app/dist /usr/share/nginx/html
 # 포트 노출
 EXPOSE 3000
