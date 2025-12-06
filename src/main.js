@@ -4,8 +4,15 @@ import router from './router'
 import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
+
 import '@/styles/common.css'
 import { createPinia, PiniaVuePlugin } from "pinia";
+
+
+// 3rd party plugins
+import '@axios'
+
 
 Vue.config.productionTip = false
 

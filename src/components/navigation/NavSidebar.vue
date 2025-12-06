@@ -7,10 +7,14 @@
       <div class="sidebar-section">
         <h2 class="sidebar-title">메뉴</h2>
         <nav class="sidebar-nav">
-          <a class="nav-item active" href="#" @click.prevent>
+          <router-link class="nav-item" :to="{ name: 'home' }" exact-active-class="active">
             <span class="nav-icon">📊</span>
             <span class="nav-text">대시보드</span>
-          </a>
+          </router-link>
+          <router-link class="nav-item" :to="{ name: 'short-url' }" exact-active-class="active">
+            <span class="nav-icon">🔗</span>
+            <span class="nav-text">Short URL</span>
+          </router-link>
           <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">⚙️</span>
             <span class="nav-text">설정</span>
@@ -23,6 +27,10 @@
             <span class="nav-icon">❓</span>
             <span class="nav-text">도움말</span>
           </a>
+          <router-link class="nav-item" :to="{ name: 'error-404' }" active-class="active">
+            <span class="nav-icon">⚠️</span>
+            <span class="nav-text">에러 페이지</span>
+          </router-link>
         </nav>
       </div>
     </div>
