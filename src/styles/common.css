@@ -54,6 +54,15 @@
   transform: scale(0.95);
 }
 
+.menu-toggle--active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.menu-toggle--active:hover {
+  background: rgba(0, 113, 227, 0.9);
+}
+
 .header-title {
   flex: 1;
 }
