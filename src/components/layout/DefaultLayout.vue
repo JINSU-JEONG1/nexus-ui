@@ -9,7 +9,7 @@
     <!-- Main Content with Sidebar -->
     <div class="flex-grow-1 d-flex">
       <!-- Sidebar -->
-      <Sidebar :is-open="isSidebarOpen" />
+      <Sidebar :is-open="!isSidebarOpen" />
 
       <!-- Content Area -->
       <main class="flex-grow-1 p-4 overflow-auto">

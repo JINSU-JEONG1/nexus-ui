@@ -1,16 +1,30 @@
 <template>
-  <div class="container-fluid">
-    <h1 class="mb-4">홈</h1>
-    <div class="row">
-      <div class="col-12">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">환영합니다</h5>
-            <p class="card-text">Nexus UI에 오신 것을 환영합니다.</p>
-            <img alt="Vue logo" src="@/assets/logo.png" class="img-fluid mb-3" style="max-width: 200px;">
-          </div>
+  <div class="home-page">
+    <div class="page-header">
+      <h1 class="page-title">프로젝트</h1>
+      <p class="page-subtitle">Nexus UI에서 제공하는 다양한 서비스를 이용해보세요</p>
+    </div>
+
+    <div class="projects-grid">
+      <router-link 
+        to="/short-url" 
+        class="project-card"
+      >
+        <div class="card-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 3L4 14H12L11 21L20 10H12L13 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-      </div>
+        <div class="card-content">
+          <h3 class="card-title">Short URL</h3>
+          <p class="card-description">긴 URL을 짧고 간단한 링크로 변환하세요</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>

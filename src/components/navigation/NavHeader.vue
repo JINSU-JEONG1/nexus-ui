@@ -3,7 +3,6 @@
     <div class="header-content">
       <button 
         class="menu-toggle" 
-        :class="{ 'menu-toggle--active': isSidebarOpen }"
         @click="$emit('toggle-sidebar')"
         type="button"
         :title="isSidebarOpen ? 'closeSidebar' : 'openSidebar'"
@@ -12,13 +11,13 @@
           <path d="M4 6L16 6M4 10L16 10M4 14L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </button>
-      <div class="header-title">
+      <router-link :to="{ name: 'home' }" class="header-title">
         <h1>Nexus</h1>
-      </div>
-      <nav class="header-nav">
+      </router-link>
+      <!-- <nav class="header-nav">
         <router-link to="/" class="nav-link">Home</router-link>
         <router-link to="/about" class="nav-link">About</router-link>
-      </nav>
+      </nav> -->
     </div>
   </header>
 </template>
