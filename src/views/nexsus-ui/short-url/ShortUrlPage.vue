@@ -37,13 +37,13 @@
             class="url-input" 
             v-model="originalUrl"
             placeholder="https://example.com/very/long/url..."
-            @keyup.enter="generateShortUrl"
+            @keyup.enter="createShortUrl"
             :disabled="isLoading"
           />
           <button 
             class="generate-btn" 
             :disabled="!originalUrl || isLoading"
-            @click="generateShortUrl"
+            @click="createShortUrl"
           >
             <span v-if="isLoading" class="spinner"></span>
             <span v-else>단축하기</span>
@@ -78,6 +78,15 @@
 </template>
 
 <script>
+
+import {getShortUrls, createShortUrl} from '@/api/nexus-ui/short-url/shortUrl';
+
+const DEF_URL_PARAM = {
+  originUrl: "",
+  shortUrl: "",
+  expiredAt: "",
+}
+
 export default {
   name: 'ShortUrlPage',
   
@@ -89,20 +98,36 @@ export default {
   
   methods: {
     // URL 단축하기 (현재는 랜덤 생성, 추후 API 연동 예정)
-    async generateShortUrl() {
-      if (!this.originalUrl) return
+    async createShortUrl() {
+      const _vm = this;
+      if (!this.originalUrl) return;
+
+      const params = { ...DEF_URL_PARAM };
+      params.originUrl = this.originalUrl;
       
-      this.isLoading = true
-      this.shortUrl = ''
+      // 백엔드 ApiRequest 구조에 맞게 데이터 재구성
+      const requestPayload = {
+        data: params  // 백엔드에서 request.getData()로 꺼낼 수 있게 함
+      };
+
+      console.log("전송 데이터 : ", requestPayload);
+      
+      this.isLoading = true;
+      this.shortUrl = '';
       
       try {
-        await new Promise(resolve => setTimeout(resolve, 800)) // 지연 시뮬레이션
-        this.shortUrl = `${window.location.origin}/s/${this.generateRandomString()}`
+        // 실제 API 호출 시 구성한 requestPayload를 전달
+        const res = await createShortUrl(requestPayload);
+        console.log("res : ", res);
+        
+        // 성공 시 로직 (예: res.data.shortUrl 등 백엔드 응답 구조에 맞게 수정)
+        this.shortUrl = res.data.shortUrl; 
+
       } catch (error) {
-        console.error('Short URL 생성 실패:', error)
-        alert('Short URL 생성에 실패했습니다.')
+        console.error('Short URL 생성 실패:', error);
+        alert('Short URL 생성에 실패했습니다.');
       } finally {
-        this.isLoading = false
+        this.isLoading = false;
       }
     },
     
