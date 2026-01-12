@@ -4,7 +4,7 @@ const { resolve } = require('path')
 
 module.exports = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  
+
   return {
     plugins: [createVuePlugin()],
     resolve: {
@@ -17,8 +17,13 @@ module.exports = defineConfig(({ mode }) => {
       'process.env': env
     },
     server: {
-      port: 8080,
-      open: true
+      port: env.VITE_APP_PORT,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+        }
+      }
     },
     build: {
       outDir: 'dist',
