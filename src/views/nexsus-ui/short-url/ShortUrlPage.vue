@@ -112,10 +112,10 @@ export default {
 
       console.log("전송 데이터 : ", requestPayload);
       
-      this.isLoading = true;
-      this.shortUrl = '';
-      
       try {
+        this.isLoading = true;
+        this.shortUrl = '';
+        
         // 실제 API 호출 시 구성한 requestPayload를 전달
         const res = await createShortUrl(requestPayload);
         console.log("res : ", res);
