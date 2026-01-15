@@ -48,6 +48,14 @@
             <span v-if="isLoading" class="spinner"></span>
             <span v-else>단축하기</span>
           </button>
+          <button 
+            class="generate-btn" 
+            :disabled="!originalUrl || isLoading"
+            @click="createShortUrlV2"
+          >
+            <span v-if="isLoading" class="spinner"></span>
+            <span v-else>단축하기22</span>
+          </button>
         </div>
       </div>
 
@@ -79,7 +87,7 @@
 
 <script>
 
-import {getShortUrls, createShortUrl} from '@/api/nexus-ui/short-url/shortUrl';
+import {getShortUrls, createShortUrl, createShortUrlV2} from '@/api/nexus-ui/short-url/shortUrl';
 
 const DEF_URL_PARAM = {
   originUrl: "",
@@ -118,6 +126,39 @@ export default {
         
         // 실제 API 호출 시 구성한 requestPayload를 전달
         const res = await createShortUrl(requestPayload);
+        console.log("res : ", res);
+        
+        // 성공 시 로직 (예: res.data.shortUrl 등 백엔드 응답 구조에 맞게 수정)
+        this.shortUrl = res.data.shortUrl; 
+
+      } catch (error) {
+        console.error('Short URL 생성 실패:', error);
+        alert('Short URL 생성에 실패했습니다.');
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async createShortUrlV2() {
+      const _vm = this;
+      if (!this.originalUrl) return;
+
+      const params = { ...DEF_URL_PARAM };
+      params.originUrl = this.originalUrl;
+      
+      // 백엔드 ApiRequest 구조에 맞게 데이터 재구성
+      const requestPayload = {
+        data: params  // 백엔드에서 request.getData()로 꺼낼 수 있게 함
+      };
+
+      console.log("전송 데이터 : ", requestPayload);
+      
+      try {
+        this.isLoading = true;
+        this.shortUrl = '';
+        
+        // 실제 API 호출 시 구성한 requestPayload를 전달
+        const res = await createShortUrlV2(requestPayload);
         console.log("res : ", res);
         
         // 성공 시 로직 (예: res.data.shortUrl 등 백엔드 응답 구조에 맞게 수정)
