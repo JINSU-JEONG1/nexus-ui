@@ -14,15 +14,6 @@ export function createShortUrl(data) {
     });
 }
 
-// Short URL 생성
-export function createShortUrlV2(data) {
-    return request({
-        url: '/short-url/v2/create.api',
-        method: 'post',
-        data,
-    });
-}
-
 // Short URL 목록 조회
 export function getShortUrls(params) {
     return request({
