@@ -35,14 +35,14 @@
           <input 
             type="text" 
             class="url-input" 
-            v-model="originalUrl"
+            v-model="originUrl"
             placeholder="https://example.com/very/long/url..."
             @keyup.enter="createShortUrl"
             :disabled="isLoading"
           />
           <button 
             class="generate-btn" 
-            :disabled="!originalUrl || isLoading"
+            :disabled="!isValidUrl || isLoading"
             @click="createShortUrl"
           >
             <span v-if="isLoading" class="spinner"></span>
@@ -91,19 +91,35 @@ export default {
   name: 'ShortUrlPage',
   
   data: () => ({
-    originalUrl: '',  // 사용자 입력 URL
+    originUrl: '',  // 사용자 입력 URL
     shortUrl: '',     // 생성된 단축 URL
     isLoading: false  // 로딩 상태
   }),
+  
+  computed: {
+    // URL 형식 검증
+    isValidUrl() {
+      if (!this.originUrl) return false;
+      
+      const urlPattern = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+      return urlPattern.test(this.originUrl.trim());
+    }
+  },
   
   methods: {
     // URL 단축하기 (현재는 랜덤 생성, 추후 API 연동 예정)
     async createShortUrl() {
       const _vm = this;
-      if (!this.originalUrl) return;
+      if (!this.originUrl) return;
+      
+      // URL 형식 검증
+      if (!this.isValidUrl) {
+        alert('올바른 URL 형식을 입력해주세요. (예: https://example.com)');
+        return;
+      }
 
       const params = { ...DEF_URL_PARAM };
-      params.originUrl = this.originalUrl;
+      params.originUrl = this.originUrl;
       
       // 백엔드 ApiRequest 구조에 맞게 데이터 재구성
       const requestPayload = {
