@@ -114,7 +114,7 @@ export default {
       
       // URL 형식 검증
       if (!this.isValidUrl) {
-        alert('올바른 URL 형식을 입력해주세요. (예: https://example.com)');
+        this.$toast.error('올바른 URL 형식을 입력해주세요. (예: https://example.com)');
         return;
       }
 
@@ -141,7 +141,7 @@ export default {
 
       } catch (error) {
         console.error('Short URL 생성 실패:', error);
-        alert('Short URL 생성에 실패했습니다.');
+        this.$toast.error('Short URL 생성에 실패했습니다.');
       } finally {
         this.isLoading = false;
       }
@@ -153,7 +153,7 @@ export default {
       
       try {
         await navigator.clipboard.writeText(this.shortUrl)
-        alert('클립보드에 복사되었습니다!')
+        this.$toast.success('클립보드에 복사되었습니다!')
       } catch {
         // 구형 브라우저 대응
         const textArea = document.createElement("textarea")
@@ -162,7 +162,7 @@ export default {
         textArea.select()
         document.execCommand('copy')
         document.body.removeChild(textArea)
-        alert('클립보드에 복사되었습니다!')
+        this.$toast.success('클립보드에 복사되었습니다!')
       }
     },
     
