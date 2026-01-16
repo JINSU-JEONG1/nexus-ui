@@ -21,7 +21,7 @@
                 <div class="card-body">
                   <h5 class="card-title">환영합니다</h5>
                   <p class="card-text">Nexus UI에 오신 것을 환영합니다.</p>
-                  <img alt="nexus logo" src="/public/nexus_logo.svg" class="img-fluid mb-3" style="max-width: 200px;">
+                  <img alt="nexus logo" src="/nexus_logo.svg" class="img-fluid mb-3" style="max-width: 200px;">
                   <HelloWorld msg="Welcome to Your Vue.js App"/>
                 </div>
               </div>

@@ -21,7 +21,7 @@
       <!-- 로고 (아이콘 + 텍스트) -->
       <router-link :to="{ name: 'home' }" class="header-logo">
         <!-- Nexus 로고 아이콘 (연결된 노드 네트워크) -->
-        <img src="/public/nexus_logo.svg" alt="Nexus Logo" class="logo-icon" />
+        <img src="/nexus_logo.svg" alt="Nexus Logo" class="logo-icon" />
         <span class="logo-text">Nexus</span>
       </router-link>
 
