@@ -21,27 +21,7 @@
       <!-- 로고 (아이콘 + 텍스트) -->
       <router-link :to="{ name: 'home' }" class="header-logo">
         <!-- Nexus 로고 아이콘 (연결된 노드 네트워크) -->
-        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- 중앙 노드 -->
-          <circle cx="16" cy="16" r="3" fill="url(#logo-gradient)"/>
-          <!-- 주변 노드들 -->
-          <circle cx="8" cy="8" r="2" fill="url(#logo-gradient)" opacity="0.8"/>
-          <circle cx="24" cy="8" r="2" fill="url(#logo-gradient)" opacity="0.8"/>
-          <circle cx="8" cy="24" r="2" fill="url(#logo-gradient)" opacity="0.8"/>
-          <circle cx="24" cy="24" r="2" fill="url(#logo-gradient)" opacity="0.8"/>
-          <!-- 연결선 -->
-          <line x1="16" y1="16" x2="8" y2="8" stroke="url(#logo-gradient)" stroke-width="1.5" opacity="0.6"/>
-          <line x1="16" y1="16" x2="24" y2="8" stroke="url(#logo-gradient)" stroke-width="1.5" opacity="0.6"/>
-          <line x1="16" y1="16" x2="8" y2="24" stroke="url(#logo-gradient)" stroke-width="1.5" opacity="0.6"/>
-          <line x1="16" y1="16" x2="24" y2="24" stroke="url(#logo-gradient)" stroke-width="1.5" opacity="0.6"/>
-          <!-- 그라데이션 정의 -->
-          <defs>
-            <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#0071E3"/>
-              <stop offset="100%" stop-color="#00A8FF"/>
-            </linearGradient>
-          </defs>
-        </svg>
+        <img src="/public/nexus_logo.svg" alt="Nexus Logo" class="logo-icon" />
         <span class="logo-text">Nexus</span>
       </router-link>
 
