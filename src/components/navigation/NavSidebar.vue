@@ -9,13 +9,13 @@
         <nav class="sidebar-nav">
           <router-link class="nav-item" :to="{ name: 'home' }" exact-active-class="active">
             <span class="nav-icon">📊</span>
-            <span class="nav-text">대시보드</span>
+            <span class="nav-text">HOME</span>
           </router-link>
           <router-link class="nav-item" :to="{ name: 'short-url' }" exact-active-class="active">
             <span class="nav-icon">🔗</span>
             <span class="nav-text">Short URL</span>
           </router-link>
-          <a class="nav-item" href="#" @click.prevent>
+          <!-- <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">⚙️</span>
             <span class="nav-text">설정</span>
           </a>
@@ -30,7 +30,7 @@
           <router-link class="nav-item" :to="{ name: 'error-404' }" active-class="active">
             <span class="nav-icon">⚠️</span>
             <span class="nav-text">에러 페이지</span>
-          </router-link>
+          </router-link> -->
         </nav>
       </div>
     </div>
