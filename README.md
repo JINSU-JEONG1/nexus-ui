@@ -32,10 +32,13 @@
 - **Router-Based Navigation**: Vue Router를 통한 SPA 라우팅
 - **API Integration**: Axios 기반 REST API 통신
 
-### Deployment Architecture
+### Architecture
 ```
-[Jenkins CI/CD] → [Docker Build] → [Nginx Container] → [Oracle Cloud]
+<img width="1408" height="768" alt="nexus-architecture" src="https://github.com/user-attachments/assets/449a1dea-211f-455a-b9b2-86e15cad7c27" />
+
+
 ```
+
 
 ---
 
