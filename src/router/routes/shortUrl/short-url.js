@@ -13,4 +13,22 @@ export default [
       ],
     },
   },
+  {
+    path: '/short-url/statistics',
+    name: 'short-url-statistics',
+    component: () => import('@/views/nexsus-ui/short-url/StatisticsPage.vue'),
+    meta: {
+      pageTitle: 'Statistics',
+      breadcrumb: [
+        {
+          text: 'Short URL',
+          active: false,
+        },
+        {
+          text: 'Statistics',
+          active: true,
+        },
+      ],
+    },
+  },
 ];

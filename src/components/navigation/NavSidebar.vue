@@ -15,10 +15,14 @@
             <span class="nav-icon">🔗</span>
             <span class="nav-text">Short URL</span>
           </router-link>
-          <!-- <a class="nav-item" href="#" @click.prevent>
+          <router-link class="nav-item" :to="{ name: 'short-url-statistics' }" exact-active-class="active">
+            <span class="nav-icon">🔗</span>
+            <span class="nav-text">Short URL 통계</span>
+          </router-link>
+          <!-- <!-- <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">⚙️</span>
             <span class="nav-text">설정</span>
-          </a>
+          </a> -->
           <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">👤</span>
             <span class="nav-text">프로필</span>

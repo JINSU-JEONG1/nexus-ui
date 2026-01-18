@@ -7,7 +7,7 @@
 
     <div class="projects-grid">
       <router-link 
-        to="/short-url" 
+        :to="{ name: 'short-url' }"
         class="project-card"
       >
         <div class="card-icon">
