@@ -17,10 +17,11 @@ module.exports = defineConfig(({ mode }) => {
       'process.env': env
     },
     server: {
-      port: env.VITE_APP_PORT,
+      port: parseInt(env.VITE_APP_PORT) || 5173,
       proxy: {
         '/api': {
-target: mode === 'development' ? 'http://nexus-backend:4000' : 'http://localhost:4000',          changeOrigin: true,
+          target: env.VITE_API_TARGET,
+          changeOrigin: true,
         }
       }
     },
