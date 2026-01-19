@@ -88,7 +88,7 @@ const DEF_URL_PARAM = {
 }
 
 export default {
-  name: 'ShortUrlPage',
+  name: 'ShortUrl',
   
   data: () => ({
     originUrl: '',  // 사용자 입력 URL

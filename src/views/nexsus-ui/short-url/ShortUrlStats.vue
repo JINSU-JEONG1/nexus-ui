@@ -156,7 +156,7 @@ const MOCK_USAGE_DATA = [
 ]
 
 export default {
-  name: 'StatisticsPage',
+  name: 'ShortUrlStats',
   
   data: () => ({
     selectedPeriod: 'week',      // 선택된 기간
