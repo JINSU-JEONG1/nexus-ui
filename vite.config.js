@@ -20,8 +20,7 @@ module.exports = defineConfig(({ mode }) => {
       port: env.VITE_APP_PORT,
       proxy: {
         '/api': {
-          target: 'http://localhost:4000',
-          changeOrigin: true,
+target: mode === 'development' ? 'http://nexus-backend:4000' : 'http://localhost:4000',          changeOrigin: true,
         }
       }
     },
