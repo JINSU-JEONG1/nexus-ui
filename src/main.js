@@ -13,25 +13,25 @@ import { createPinia, PiniaVuePlugin } from "pinia";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+// AG Grid Styles
+import 'ag-grid-community/styles/ag-grid.css'
+import 'ag-grid-community/styles/ag-theme-quartz.css'
+
 // 3rd party plugins
 import '@axios'
 
 // Toast 설정
 Vue.use(Toast, {
-  // 위치: 중앙 상단 (버튼 위쪽 느낌을 원하시면 이 위치가 가장 적절)
   position: "top-right",
 
-  // 애니메이션: 기본 'bounce'보다 'fade'가 훨씬 차분하고 부드럽습니다.
   transition: "Vue-Toastification__fade",
 
-  // 시간: 800ms는 너무 빨라서 끊기는 느낌을 줍니다. 
-  // 1500~2000ms 정도로 늘려야 여유롭고 부드럽게 느껴집니다.
   timeout: 1200,
 
   // UI 깔끔하게 하기
-  closeButton: false,      // 닫기 버튼 제거 (심플함)
-  hideProgressBar: true,   // 진행바 제거 (심플함)
-  icon: true,              // 아이콘 유지
+  closeButton: false,      
+  hideProgressBar: true,   
+  icon: true,              
 
   // 동작 설정
   closeOnClick: true,
