@@ -110,16 +110,17 @@ export default {
     // URL 단축하기 (현재는 랜덤 생성, 추후 API 연동 예정)
     async createShortUrl() {
       const _vm = this;
-      if (!this.originUrl) return;
+
+      if (!_vm.originUrl) return;
       
       // URL 형식 검증
-      if (!this.isValidUrl) {
-        this.$toast.error('올바른 URL 형식을 입력해주세요. (예: https://example.com)');
+      if (!_vm.isValidUrl) {
+        _vm.$toast.error('올바른 URL 형식을 입력해주세요. (예: https://example.com)');
         return;
       }
 
       const params = { ...DEF_URL_PARAM };
-      params.originUrl = this.originUrl;
+      params.originUrl = _vm.originUrl;
       
       // 백엔드 ApiRequest 구조에 맞게 데이터 재구성
       const requestPayload = {
@@ -129,46 +130,49 @@ export default {
       console.log("전송 데이터 : ", requestPayload);
       
       try {
-        this.isLoading = true;
-        this.shortUrl = '';
+        _vm.isLoading = true;
+        _vm.shortUrl = '';
         
         // 실제 API 호출 시 구성한 requestPayload를 전달
         const res = await createShortUrl(requestPayload);
         console.log("res : ", res);
         
         // 성공 시 로직 (예: res.data.shortUrl 등 백엔드 응답 구조에 맞게 수정)
-        this.shortUrl = res.data.shortUrl; 
+        _vm.shortUrl = res.data.shortUrl; 
 
       } catch (error) {
         console.error('Short URL 생성 실패:', error);
-        this.$toast.error('Short URL 생성에 실패했습니다.');
+        _vm.$toast.error('Short URL 생성에 실패했습니다.');
       } finally {
-        this.isLoading = false;
+        _vm.isLoading = false;
       }
     },
     
     // 클립보드에 복사하기
     async copyToClipboard() {
-      if (!this.shortUrl) return
+      const _vm = this;
+
+      if (!_vm.shortUrl) return
       
       try {
-        await navigator.clipboard.writeText(this.shortUrl)
-        this.$toast.success('클립보드에 복사되었습니다!')
+        await navigator.clipboard.writeText(_vm.shortUrl)
+        _vm.$toast.success('클립보드에 복사되었습니다!')
       } catch {
         // 구형 브라우저 대응
         const textArea = document.createElement("textarea")
-        textArea.value = this.shortUrl
+        textArea.value = _vm.shortUrl
         document.body.appendChild(textArea)
         textArea.select()
         document.execCommand('copy')
         document.body.removeChild(textArea)
-        this.$toast.success('클립보드에 복사되었습니다!')
+        _vm.$toast.success('클립보드에 복사되었습니다!')
       }
     },
     
     // 새 탭에서 URL 열기
     goToUrl() {
-      if (this.shortUrl) window.open(this.shortUrl, '_blank')
+      const _vm = this; 
+      if (_vm.shortUrl) window.open(_vm.shortUrl, '_blank')
     },
     
     // 랜덤 문자열 생성 (단축 코드용)
