@@ -5,7 +5,7 @@
 
 **Nexus UI**는 개인프로젝트로 개발한 다양한 웹 서비스와 유틸리티들을 한데 모아 관리하는 프론트엔드 통합 플랫폼입니다. 
 
-**Oracle Cloud Infrastructure** 에 **Docker**와 **Jenkins**를 이용한 자동화 배포 환경을 직접 구축하였으며, URL 단축 서비스와 같은 실질적인 기능들을 지속적으로 추가하고 실험하는 개인 프로젝트 저장소입니다.
+**Oracle Cloud Infrastructure** 에 **Docker**와 **Jenkins**를 이용한 배포 환경을 직접 구축하였으며, URL 단축 서비스와 같은 실질적인 기능들을 지속적으로 추가하고 실험하는 개인 프로젝트 저장소입니다.
 
 ---
 
@@ -15,11 +15,11 @@
 ### 🛠️ Tech Stack
 
 - **Language**: JavaScript (ES6+)
-- **Framework**: Vue.js 2.7.16, Vue Router 3.5.1
+- **Framework**: Vue.js 2.7.16
 - **Build Tool**: Vite 4.5.0
-- **UI Library**: Bootstrap Vue 2.21.0, Bootstrap 5.3.8
+- **UI Library**: Bootstrap Vue 2.21.0
 - **State Management**: Pinia 2.0.0
-- **Web Server**: Nginx (Reverse Proxy)
+- **Web Server**: Nginx 
 - **Infrastructure**: Oracle Cloud (OCI)
 - **CI/CD**: Docker, Jenkins
 
