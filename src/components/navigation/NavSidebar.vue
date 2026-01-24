@@ -19,22 +19,22 @@
             <span class="nav-icon">🔗</span>
             <span class="nav-text">Short URL 통계</span>
           </router-link>
-          <!-- <!-- <a class="nav-item" href="#" @click.prevent>
+          <!-- <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">⚙️</span>
             <span class="nav-text">설정</span>
           </a> -->
-          <a class="nav-item" href="#" @click.prevent>
+          <!-- <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">👤</span>
             <span class="nav-text">프로필</span>
-          </a>
-          <a class="nav-item" href="#" @click.prevent>
+          </a> -->
+          <!-- <a class="nav-item" href="#" @click.prevent>
             <span class="nav-icon">❓</span>
             <span class="nav-text">도움말</span>
-          </a>
-          <router-link class="nav-item" :to="{ name: 'error-404' }" active-class="active">
+          </a> -->
+          <!-- <router-link class="nav-item" :to="{ name: 'error-404' }" active-class="active">
             <span class="nav-icon">⚠️</span>
             <span class="nav-text">에러 페이지</span>
-          </router-link> -->
+          </router-link>  -->
         </nav>
       </div>
     </div>

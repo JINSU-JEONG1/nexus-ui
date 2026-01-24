@@ -1,5 +1,5 @@
 <template>
-  <div class="default-layout d-flex flex-column vh-100">
+  <div class="default-layout d-flex flex-column min-vh-100">
     <!-- Header -->
     <Header 
       :is-sidebar-open="isSidebarOpen"
@@ -12,7 +12,7 @@
       <Sidebar :is-open="!isSidebarOpen" />
 
       <!-- Content Area -->
-      <main class="flex-grow-1 p-4 overflow-auto">
+      <main class="flex-grow-1 p-4">
         <slot />
       </main>
     </div>

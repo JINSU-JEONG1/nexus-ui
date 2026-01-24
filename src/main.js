@@ -13,9 +13,9 @@ import { createPinia, PiniaVuePlugin } from "pinia";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
-// AG Grid Styles
-import 'ag-grid-community/styles/ag-grid.css'
-import 'ag-grid-community/styles/ag-theme-quartz.css'
+// AG Grid Styles - removed for performance
+// import 'ag-grid-community/styles/ag-grid.css'
+// import 'ag-grid-community/styles/ag-theme-quartz.css'
 
 // 3rd party plugins
 import '@axios'
