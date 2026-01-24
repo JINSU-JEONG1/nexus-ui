@@ -50,11 +50,11 @@ export function getKpiData(data) {
 /**
  * 추이 차트 데이터 조회
  */
-export function getTrendData(period = 'week') {
+export function getTrendData(data) {
     return request({
         url: '/short-url/stats/trend',
-        method: 'get',
-        params: { period },
+        method: 'post',
+        data,
     });
 }
 

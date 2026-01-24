@@ -62,12 +62,16 @@
             <span class="no-data-icon">📉</span>
             <p class="no-data-text">데이터가 존재하지 않습니다</p>
           </div>
+          
 
           <!-- 차트/그리드 컨텐츠 -->
-          <!-- 
           <div v-else class="chart-content">
-            <div v-show="selectedChartType === 'trend'" ref="mainChart" class="full-size"></div>
-              <ag-grid-vue
+            <!-- Trend Chart (ECharts) -->
+            <div v-show="selectedChartType === 'trend'" ref="trendChart" class="full-size"></div>
+            
+            <!-- Usage Grid (AG Grid) -->
+            <!--
+            <ag-grid-vue
                 v-if="selectedChartType === 'usage'"
                 class="ag-theme-quartz full-size"
                 :columnDefs="columnDefs"
@@ -76,8 +80,10 @@
                 :animateRows="true"
                 @grid-ready="onGridReady"
               >
-              </ag-grid-vue>
-            </div> -->
+            </ag-grid-vue>
+             -->
+
+            </div>
 
         </div>
       </div>
@@ -89,7 +95,7 @@
         <div class="glass-card kpi-card total-links">
           <div class="kpi-icon">🔗</div>
           <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.totalLinks.toLocaleString() }}</div>
+            <div class="kpi-value">{{ kpiData.totalLinks }}</div>
             <div class="kpi-label">전체 생성 링크</div>
             <div class="kpi-change positive"></div>
           </div>
@@ -99,48 +105,49 @@
         <div class="glass-card kpi-card total-clicks">
           <div class="kpi-icon">👆</div>
           <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.totalClicks.toLocaleString() }}</div>
+            <div class="kpi-value">{{ kpiData.totalClicks }}</div>
             <div class="kpi-label">전체 클릭수</div>
             <div class="kpi-change positive"></div>
           </div>
         </div>
 
-        <!--기간별 생성 링크 -->
-        <!-- <div class="glass-card kpi-card today-created">
+        <!--오늘 클릭 수 -->
+        <div class="glass-card kpi-card today-created">
           <div class="kpi-icon">📅</div>
           <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.todayCreated.toLocaleString() }}</div>
-            <div class="kpi-label">{{ kpiPeriod.label }} 생성</div>
+            <div class="kpi-value">{{ kpiData.todayClicked }}</div>
+            <div class="kpi-label">오늘 클릭수</div>
             <div class="kpi-change positive"></div>
           </div>
-        </div> -->
+        </div>
 
         <!-- 기간별 클릭수 -->
         <div class="glass-card kpi-card period-clicks">
-          <div class="kpi-icon">📉</div>
+          <div class="kpi-icon">🖱️</div>
           <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.periodClicks.toLocaleString() }}</div>
-            <div class="kpi-label">{{ kpiPeriod.label }} 클릭수</div>
-            <div class="kpi-change" :class="kpiData.periodClicksChange >= 0 ? 'positive' : 'negative'">
-              {{ kpiData.periodClicksChange >= 0 ? '↑' : '↓' }} {{ Math.abs(kpiData.periodClicksChange) }}%
+            <div class="kpi-main-row">
+              <div class="kpi-value">{{ kpiData.currentClicks }}</div>
+              <div class="kpi-total-value">/ {{ kpiData.totalClicks }}</div>
             </div>
+            <div class="kpi-label">{{ periodClicksLabel }}</div>
+            <div class="kpi-change positive"></div>
           </div>
         </div>
 
-        <!-- 기간별 클릭률 -->
+        <!-- 기간별 클릭률 증감률 -->
         <div class="glass-card kpi-card avg-rate">
           <div class="kpi-icon">📈</div>
           <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.avgClickRate }}%</div>
-            <div class="kpi-label">{{ kpiPeriod.label }} 클릭률</div>
-            <div class="kpi-change" :class="kpiData.avgClickRateChange >= 0 ? 'positive' : 'negative'">
-               {{ kpiData.avgClickRateChange >= 0 ? '↑' : '↓' }} {{ Math.abs(kpiData.avgClickRateChange) }}%
+            <div 
+              class="kpi-value" 
+              :style="{ color: kpiData.periodClicksChange >= 0 ? '#ff4d4f' : '#1890ff' }"
+            >
+              {{ kpiData.periodClicksChange >= 0 ? '↑' : '↓' }} {{ Math.abs(kpiData.periodClicksChange).toFixed(2) }}%
             </div>
+            <div class="kpi-label">{{ periodDeltaText }}</div>
           </div>
         </div>
-
       </div>
-      
     </div>
   </div>
 </template>
@@ -200,85 +207,25 @@ export default {
     
     // KPI 데이터 (동적 데이터)
     kpiData: {
-      totalLinks: 1234,
-      todayCreated: 45,
-      totalClicks: 12345,
-      periodClicks: 892,
-      periodClicksChange: 12,
-      avgClickRate: 87,
-      avgClickRateChange: -3
+      totalLinks: 1,              // 전체 생성된 링크 수
+      totalClicks: 2,             // 전체 클릭수
+      currentClicks: 3,           // 기간별 클릭수
+      prevClicks: 4,              // 저번 기간 클릭수
+      periodClicksChange: 5,      // 기간별 클릭수 변화량
+      avgClickRateChange: 6,      // 평균 클릭률 변화량
+      todayClicked: 7             // 오늘 클릭수
     },
     // 추이 차트 데이터 (동적 데이터)
-    trendData: {...MOCK_TREND_DATA},
+    trendData: {},
     // 사용 현황 차트 데이터 (동적 데이터)
-    usageData: {...MOCK_TREND_DATA},
+    usageData: {},
     
-    /* Chart Options  */
-    lineChartOption: {
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '10%',
-        top: '15%',
-        containLabel: true
-      },
-      tooltip: {
-        trigger: 'axis',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-        textStyle: { color: '#1d1d1f' },
-        axisPointer: {
-          type: 'cross',
-          lineStyle: { color: 'rgba(0, 113, 227, 0.3)' }
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: [], // To be filled
-        boundaryGap: false,
-        axisLine: { lineStyle: { color: '#e5e5e5' } },
-        axisLabel: { color: '#86868b' }
-      },
-      yAxis: {
-        type: 'value',
-        axisLine: { show: false },
-        axisLabel: { color: '#86868b' },
-        splitLine: { lineStyle: { color: '#f5f5f7' } }
-      },
-      series: [
-        {
-          name: '생성된 링크',
-          type: 'line',
-          smooth: true,
-          data: [], // To be filled
-          lineStyle: { width: 3, color: '#0071E3' },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(0, 113, 227, 0.3)' },
-              { offset: 1, color: 'rgba(0, 113, 227, 0.05)' }
-            ])
-          },
-          itemStyle: { color: '#0071E3' }
-        },
-        {
-          name: '총 클릭수',
-          type: 'line',
-          smooth: true,
-          data: [], // To be filled
-          lineStyle: { width: 3, color: '#FF3B30' },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(255, 59, 48, 0.3)' },
-              { offset: 1, color: 'rgba(255, 59, 48, 0.05)' }
-            ])
-          },
-          itemStyle: { color: '#FF3B30' }
-        }
-      ]
-    },
+    /* Chart Instance */
+    chartInstance: null,
+    resizeHandler: null,  // resize 이벤트 리스너 참조
 
     /* AG Grid Options */
-    chartInstance: null,     
+      
     gridApi: null,
     defaultColDef: {
       sortable: true,
@@ -327,11 +274,30 @@ export default {
       const _vm = this;
       return _vm.periods.find(p => p.value === _vm.selectedPeriod)
     },
-    
-    // 차트 데이터 (기간에 따라 변경)
-    chartData() {
+
+    // 기간별 클릭수 레이블 (예: '이번 주 클릭수')
+    periodClicksLabel() {
       const _vm = this;
-      return _vm.trendData || { labels: [], created: [], clicks: [] }
+      const labelMap = {
+        day: '오늘',
+        week: '이번 주',
+        month: '이번 달'
+      }
+      return `${labelMap[_vm.selectedPeriod] || '기간별'} 클릭수`
+    },
+
+    // 증감률 절대 변화량 텍스트 (예: '(전주 대비 +78)')
+    periodDeltaText() {
+      const _vm = this;
+      const delta = _vm.kpiData.currentClicks - _vm.kpiData.prevClicks
+      const prevPeriodMap = {
+        day: '전일',
+        week: '전주',
+        month: '전월'
+      }
+      const prevPeriod = prevPeriodMap[_vm.selectedPeriod] || '이전 기간'
+      const sign = delta >= 0 ? '+' : ''
+      return `${prevPeriod} 대비 ${sign}${delta}`
     },
     
     // 데이터 유무 확인
@@ -350,8 +316,11 @@ export default {
     // 기간 변경 시 차트 데이터 재조회 및 업데이트
     async selectedPeriod() {
       const _vm = this;
-      await _vm.fetchKpiData()
-      await _vm.fetchTrendData()
+      // 병렬로 API 호출
+      await Promise.all([
+        _vm.fetchKpiData(),
+        _vm.fetchTrendData()
+      ])
       _vm.updateChart()
     },
     // 차트 타입 변경 시 데이터 재조회 및 업데이트
@@ -359,7 +328,7 @@ export default {
       const _vm = this;
 
       if (_vm.selectedChartType === 'usage') {
-        await _vm.fetchUsageData()
+        // await _vm.fetchUsageData()
       } else {
         // ECharts가 숨겨져 있었을 수 있으므로 리사이즈 필요
         _vm.$nextTick(() => {
@@ -372,33 +341,42 @@ export default {
   
   async mounted() {
     const _vm = this;
-    _vm.initChart()
 
     await _vm.fetchKpiData()
     await _vm.fetchTrendData()
-    await _vm.fetchUsageData()
+    // await _vm.fetchUsageData()
+
+    _vm.$nextTick(() => {
+      _vm.initChart()
+    })
 
   },
   
   beforeUnmount() {
-    const _vm = this;
+    // resize 이벤트 리스너 제거 (메모리 누수 방지)
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler)
+      this.resizeHandler = null
+    }
+    
     // 차트 인스턴스 정리
-    if (_vm.chartInstance) {
-      _vm.chartInstance.dispose()
+    if (this.chartInstance) {
+      this.chartInstance.dispose()
+      this.chartInstance = null
     }
   },
   
   methods: {
     // 차트 초기화
     initChart() {
-      const _vm = this;
-      // _vm.chartInstance = echarts.init(_vm.$refs.mainChart)
-      _vm.updateChart()
+      this.chartInstance = echarts.init(this.$refs.trendChart)
+      this.updateChart()
       
-      // 반응형 처리
-      window.addEventListener('resize', () => {
-        _vm.chartInstance?.resize()
-      })
+      // 반응형 처리 - 메모리 누수 방지를 위해 참조 저장
+      this.resizeHandler = () => {
+        this.chartInstance?.resize()
+      }
+      window.addEventListener('resize', this.resizeHandler)
     },
     
     // 차트 업데이트
@@ -410,16 +388,83 @@ export default {
       _vm.updateLineChart()
     },
     
+    // ECharts 옵션 생성 (Vue 반응성 추적 최적화)
+    getChartOption() {
+      return {
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '10%',
+          top: '15%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          borderColor: 'rgba(0, 0, 0, 0.1)',
+          textStyle: { color: '#1d1d1f' },
+          axisPointer: {
+            type: 'cross',
+            lineStyle: { color: 'rgba(0, 113, 227, 0.3)' }
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: [],
+          boundaryGap: false,
+          axisLine: { lineStyle: { color: '#e5e5e5' } },
+          axisLabel: { color: '#86868b' }
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: { show: false },
+          axisLabel: { color: '#86868b' },
+          splitLine: { lineStyle: { color: '#f5f5f7' } }
+        },
+        series: [
+          {
+            name: '생성된 링크',
+            type: 'line',
+            smooth: true,
+            data: [],
+            lineStyle: { width: 3, color: '#0071E3' },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(0, 113, 227, 0.3)' },
+                { offset: 1, color: 'rgba(0, 113, 227, 0.05)' }
+              ])
+            },
+            itemStyle: { color: '#0071E3' }
+          },
+          {
+            name: '총 클릭수',
+            type: 'line',
+            smooth: true,
+            data: [],
+            lineStyle: { width: 3, color: '#FF3B30' },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(255, 59, 48, 0.3)' },
+                { offset: 1, color: 'rgba(255, 59, 48, 0.05)' }
+              ])
+            },
+            itemStyle: { color: '#FF3B30' }
+          }
+        ]
+      }
+    },
+    
     // 라인 차트 업데이트
     updateLineChart() {
-      const _vm = this;
-      // Data 영역의 옵션 가져오기
-      const option = _vm.lineChartOption
+      if (!this.trendData) return
+      
+      // 매번 새로운 옵션 객체 생성 (Vue 반응성 추적 방지)
+      const option = this.getChartOption()
       
       // 데이터 업데이트
-      option.xAxis.data = _vm.chartData.labels
-      option.series[0].data = _vm.chartData.created
-      option.series[1].data = _vm.chartData.clicks
+      option.xAxis.data = this.trendData.labels
+      option.series[0].data = this.trendData.created
+      option.series[1].data = this.trendData.clicks
       
       this.chartInstance.setOption(option, true)
     },
@@ -440,33 +485,36 @@ export default {
       
       try {
         const res = await getKpiData(requestPayload)
-        // 데이터 매핑 (나중에 실제 API 연동 시 수정)
-        const data = res.data;
+        const data = res.data
+        console.log('KPI 데이터:', data)
         _vm.kpiData = {
-          totalLinks: data.totalLinks,
-          todayCreated: data.todayCreated,
-          totalClicks: data.totalClicks,
-          periodClicks: data.periodClicks,
-          avgClickRate: data.avgClickRate
-        };
-        console.log('KPI 데이터:', res)
+          ...data
+        }
       } catch (error) {
         console.warn('KPI 데이터 로드 실패', error)
-        // 에러 시 기존 Mock 데이터 유지
       }
     },
     
     // 추이 차트 데이터 조회
     async fetchTrendData() {
       const _vm = this;
+
+      const requestPayload = {
+        data: {
+          period: _vm.selectedPeriod
+        }
+      }
       
       try {
-        // const res = await getTrendData(_vm.selectedPeriod)
-        // this.trendData = res.data
-        console.log('추이 데이터:', res)
+        const res = await getTrendData(requestPayload)
+        const data = res.data
+        console.log('추이 데이터:', data)
+        _vm.trendData = {
+          ...data
+        }
+        
       } catch (error) {
         console.warn('추이 데이터 로드 실패', error)
-        _vm.trendData = {...MOCK_TREND_DATA[_vm.selectedPeriod]}
       }
     },
     
@@ -513,13 +561,11 @@ export default {
   align-items: center;
   gap: 6px;
   padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
-  animation: float 3s ease-in-out infinite;
 }
 
 .badge-text {
@@ -548,15 +594,14 @@ export default {
   font-weight: 400;
 }
 
-/* 글래스 카드 */
+/* 글래스 카드 (이름은 유지하되 불투명 최적화) */
 .glass-card {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 /* 차트 타입 선택 */
@@ -698,6 +743,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
+  contain: content; /* 렌더링 최적화 힌트 */
 }
 
 .kpi-card {
@@ -707,8 +753,7 @@ export default {
   gap: 16px;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 그라데이션 배경 오버레이 */
@@ -731,6 +776,7 @@ export default {
 
 .kpi-card:hover {
   box-shadow: 0 28px 56px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 /* 카드 내부 요소 z-index */
@@ -750,11 +796,27 @@ export default {
 }
 
 .kpi-value {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #1d1d1f;
   margin-bottom: 4px;
 }
+
+/* 기간별 클릭수 카드의 메인 로우 (현재 수치 + 전체 수치) */
+.kpi-main-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+/* 전체 수치 - 작고 옅게 */
+.kpi-total-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #b0b0b5;
+}
+
 
 .kpi-label {
   font-size: 0.9rem;
@@ -774,6 +836,15 @@ export default {
 .kpi-change.negative {
   color: #FF3B30;
 }
+
+/* 증감률 절대 변화량 텍스트 (예: (전주 대비 +78)) */
+.kpi-delta {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6e6e73;
+  margin-top: 4px;
+}
+
 
 /* 애니메이션 */
 @keyframes float {
