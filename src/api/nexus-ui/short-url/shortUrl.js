@@ -8,18 +8,18 @@ import request from '@/utils/request';
 // Short URL 생성
 export function createShortUrl(data) {
     return request({
-        url: '/short-url/create.api',
+        url: '/short-url/create',
         method: 'post',
         data,
     });
 }
 
 // Short URL 목록 조회
-export function getShortUrls(params) {
+export function getShortUrls(data) {
     return request({
         url: '/short-url',
         method: 'get',
-        params,
+        data,
     });
 }
 
@@ -39,10 +39,11 @@ export function getShortUrlById(id) {
 /**
  * KPI 데이터 조회
  */
-export function getKpiData() {
+export function getKpiData(data) {
     return request({
-        url: '/short-url/statistics/kpi',
-        method: 'get',
+        url: `/short-url/stats/kpi`,
+        method: 'post',
+        data,
     });
 }
 
@@ -51,7 +52,7 @@ export function getKpiData() {
  */
 export function getTrendData(period = 'week') {
     return request({
-        url: '/short-url/statistics/trend',
+        url: '/short-url/stats/trend',
         method: 'get',
         params: { period },
     });
@@ -62,7 +63,7 @@ export function getTrendData(period = 'week') {
  */
 export function getUsageData(limit = 100) {
     return request({
-        url: '/short-url/statistics/usage',
+        url: '/short-url/stats/usage',
         method: 'get',
         params: { limit },
     });
@@ -73,7 +74,7 @@ export function getUsageData(limit = 100) {
  */
 export function getAllStatistics(period = 'week') {
     return request({
-        url: '/short-url/statistics/all',
+        url: '/short-url/stats/all',
         method: 'get',
         params: { period },
     });

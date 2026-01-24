@@ -15,7 +15,8 @@
         <p class="page-subtitle">링크 생성 및 클릭 추이를 한눈에 확인하세요</p>
       </div>
 
-      <!-- 차트 타입 선택 탭 -->
+    <!-- 차트 타입 선택 탭 -->
+    <!--       
       <div class="glass-card chart-type-selector">
         <button 
           v-for="type in chartTypes" 
@@ -26,9 +27,10 @@
           <span class="type-icon">{{ type.icon }}</span>
           <span>{{ type.label }}</span>
         </button>
-      </div>
+      </div> 
+    -->
 
-      <!-- 기간 선택 탭 (추이 차트일 때만 표시) -->
+    <!-- 기간 선택 탭 (추이 차트일 때만 표시) -->
       <div v-if="selectedChartType === 'trend'" class="glass-card period-selector">
         <button 
           v-for="period in periods" 
@@ -62,24 +64,21 @@
           </div>
 
           <!-- 차트/그리드 컨텐츠 -->
+          <!-- 
           <div v-else class="chart-content">
-
-            <!-- Trend Chart (ECharts) -->
             <div v-show="selectedChartType === 'trend'" ref="mainChart" class="full-size"></div>
-            <!-- Usage Grid (AG Grid) -->
-            <ag-grid-vue
-              v-if="selectedChartType === 'usage'"
-              class="ag-theme-quartz full-size"
-              :columnDefs="columnDefs"
-              :rowData="usageData"
-              :defaultColDef="defaultColDef"
-              :animateRows="true"
-              @grid-ready="onGridReady"
-            >
-            </ag-grid-vue>
-            
-            
-          </div>
+              <ag-grid-vue
+                v-if="selectedChartType === 'usage'"
+                class="ag-theme-quartz full-size"
+                :columnDefs="columnDefs"
+                :rowData="usageData"
+                :defaultColDef="defaultColDef"
+                :animateRows="true"
+                @grid-ready="onGridReady"
+              >
+              </ag-grid-vue>
+            </div> -->
+
         </div>
       </div>
         
@@ -351,6 +350,7 @@ export default {
     // 기간 변경 시 차트 데이터 재조회 및 업데이트
     async selectedPeriod() {
       const _vm = this;
+      await _vm.fetchKpiData()
       await _vm.fetchTrendData()
       _vm.updateChart()
     },
@@ -373,8 +373,11 @@ export default {
   async mounted() {
     const _vm = this;
     _vm.initChart()
-    await _vm.fetchAllData()
-    _vm.animateCounters()
+
+    await _vm.fetchKpiData()
+    await _vm.fetchTrendData()
+    await _vm.fetchUsageData()
+
   },
   
   beforeUnmount() {
@@ -389,7 +392,7 @@ export default {
     // 차트 초기화
     initChart() {
       const _vm = this;
-      _vm.chartInstance = echarts.init(_vm.$refs.mainChart)
+      // _vm.chartInstance = echarts.init(_vm.$refs.mainChart)
       _vm.updateChart()
       
       // 반응형 처리
@@ -421,40 +424,31 @@ export default {
       this.chartInstance.setOption(option, true)
     },
     
-    animateCounters() {
-      // 애니메이션 로직 일시 제거 (데이터 바인딩 테스트)
-    },
-    
     // ============================================
     // API 호출 메서드
     // ============================================
     
-    // 모든 통계 데이터 조회
-    async fetchAllData() {
-      const _vm = this;
-      
-      await Promise.all([
-        _vm.fetchKpiData(),
-        _vm.fetchTrendData(),
-        _vm.fetchUsageData()
-      ])
-    },
-    
     // KPI 데이터 조회
     async fetchKpiData() {
       const _vm = this;
+
+      const requestPayload = {
+        data: {
+          period: _vm.selectedPeriod
+        }
+      }
       
       try {
-        const res = await getKpiData()
+        const res = await getKpiData(requestPayload)
         // 데이터 매핑 (나중에 실제 API 연동 시 수정)
-        // const data = res.data;
-        // _vm.kpiData = {
-        //   totalLinks: data.totalLinks,
-        //   todayCreated: data.todayCreated,
-        //   totalClicks: data.totalClicks,
-        //   periodClicks: data.periodClicks,
-        //   avgClickRate: data.avgClickRate
-        // };
+        const data = res.data;
+        _vm.kpiData = {
+          totalLinks: data.totalLinks,
+          todayCreated: data.todayCreated,
+          totalClicks: data.totalClicks,
+          periodClicks: data.periodClicks,
+          avgClickRate: data.avgClickRate
+        };
         console.log('KPI 데이터:', res)
       } catch (error) {
         console.warn('KPI 데이터 로드 실패', error)
@@ -467,7 +461,7 @@ export default {
       const _vm = this;
       
       try {
-        const res = await getTrendData(_vm.selectedPeriod)
+        // const res = await getTrendData(_vm.selectedPeriod)
         // this.trendData = res.data
         console.log('추이 데이터:', res)
       } catch (error) {
@@ -481,7 +475,7 @@ export default {
       const _vm = this;
       
       try {
-        const res = await getUsageData(10)
+        // const res = await getUsageData(10)
         // this.usageData = res.data
         console.log('점유율 데이터:', res)
       } catch (error) {

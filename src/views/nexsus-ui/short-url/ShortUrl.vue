@@ -119,12 +119,11 @@ export default {
         return;
       }
 
-      const params = { ...DEF_URL_PARAM };
-      params.originUrl = _vm.originUrl;
-      
       // 백엔드 ApiRequest 구조에 맞게 데이터 재구성
       const requestPayload = {
-        data: params  // 백엔드에서 request.getData()로 꺼낼 수 있게 함
+        data: {
+          originUrl: _vm.originUrl
+        }  // 백엔드에서 request.getData()로 꺼낼 수 있게 함
       };
 
       console.log("전송 데이터 : ", requestPayload);
