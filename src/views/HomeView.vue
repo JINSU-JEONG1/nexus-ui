@@ -2,14 +2,14 @@
   <div class="home d-flex flex-column vh-100">
     <!-- Header -->
     <Header 
-      :is-sidebar-open="isSidebarOpen"
+      :is-sidebar-open="false"
       @toggle-sidebar="toggleSidebar"
     />
 
     <!-- Main Content with Sidebar -->
     <div class="flex-grow-1 d-flex">
       <!-- Sidebar -->
-      <Sidebar :is-open="isSidebarOpen" />
+      <!-- <Sidebar :is-open="isSidebarOpen" /> -->
 
       <!-- Content Area -->
       <main class="flex-grow-1 p-4 overflow-auto">
@@ -40,18 +40,18 @@
 // @ is an alias to /src
 import Header from '@/components/navigation/NavHeader.vue'
 import Footer from '@/components/navigation/NavFooter.vue'
-import Sidebar from '@/components/navigation/NavSidebar.vue'
+// import Sidebar from '@/components/navigation/NavSidebar.vue'
 
 export default {
   name: 'HomeView',
   components: {
     Header,
     Footer,
-    Sidebar
+    // Sidebar
   },
   data() {
     return {
-      isSidebarOpen: true
+      isSidebarOpen: false
     }
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
   <header class="app-header">
     <div class="header-content">
-      <!-- 메뉴 토글 버튼 -->
-      <button 
+       
+      <!-- <button 
         class="menu-toggle" 
         @click="$emit('toggle-sidebar')"
         type="button"
@@ -16,7 +16,7 @@
             stroke-linecap="round"
           />
         </svg>
-      </button>
+      </button> -->
 
       <!-- 로고 (아이콘 + 텍스트) -->
       <router-link :to="{ name: 'home' }" class="header-logo">
