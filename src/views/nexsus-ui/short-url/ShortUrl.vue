@@ -7,16 +7,15 @@
       <div class="page-header">
         <!-- 뱃지 영역: 부트스트랩 그리드로 위치 조정 -->
         <div class="row align-items-center mb-4">
-          <div class="col d-none d-md-block"></div> <!-- 좌측 빈 공간 (중앙 정렬 유지용) -->
-          
-          <div class="col-auto">
+          <div class="col">
             <div class="glass-badge m-0">
               <span>✨</span>
               <span class="badge-text">Free Link Shortener</span>
             </div>
           </div>
-
-          <div class="col text-end">
+        </div>
+        <div class="row align-items-center mb-4">
+          <div class="col">
             <router-link 
               :to="{ name: 'short-url-statistics' }" 
               class="text-decoration-none"
