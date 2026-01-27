@@ -2,15 +2,34 @@
   <!-- 전체 페이지 컨테이너 -->
   <div class="short-url-page">
     <div class="content-wrapper">
-      
+
       <!-- 헤더 영역: 뱃지 + 타이틀 + 설명 -->
       <div class="page-header">
-        <!-- 글래스 효과 뱃지 -->
-        <div class="glass-badge">
-          <span>✨</span>
-          <span class="badge-text">Free Link Shortener</span>
+        <!-- 뱃지 영역: 부트스트랩 그리드로 위치 조정 -->
+        <div class="row align-items-center mb-4">
+          <div class="col d-none d-md-block"></div> <!-- 좌측 빈 공간 (중앙 정렬 유지용) -->
+          
+          <div class="col-auto">
+            <div class="glass-badge m-0">
+              <span>✨</span>
+              <span class="badge-text">Free Link Shortener</span>
+            </div>
+          </div>
+
+          <div class="col text-end">
+            <router-link 
+              :to="{ name: 'short-url-statistics' }" 
+              class="text-decoration-none"
+            >
+              <div class="glass-badge m-0">
+                <span>📊</span>
+                <span class="badge-text">통계 보러가기 →</span>
+              </div>
+            </router-link>
+          </div>
         </div>
-        
+      
+
         <!-- 메인 타이틀 -->
         <h1 class="page-title">
           Short <span class="gradient-text">URL</span>
@@ -216,7 +235,7 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
+  margin: 0.5rem 0.2rem 0.5rem 0.2rem;
   animation: float 3s ease-in-out infinite;
 }
 
@@ -224,6 +243,7 @@ export default {
   font-size: 0.85rem;
   font-weight: 600;
   color: #1d1d1f;
+  text-decoration: none !important;
 }
 
 /* 페이지 타이틀 */
