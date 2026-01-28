@@ -4,26 +4,21 @@
     <div class="content-wrapper">
 
       <!-- 헤더 영역: 뱃지 + 타이틀 + 설명 -->
-      <div class="page-header">
+      <div class="page-header fade-in">
         <!-- 뱃지 영역: 부트스트랩 그리드로 위치 조정 -->
         <div class="row align-items-center mb-4">
           <div class="col">
-            <div class="glass-badge m-0">
-              <span>✨</span>
-              <span class="badge-text">Free Link Shortener</span>
-            </div>
+            <GlassBadge icon="✨" text="Free Link Shortener" class="m-0" />
           </div>
         </div>
         <div class="row align-items-center mb-4">
           <div class="col">
-            <router-link 
-              :to="{ name: 'short-url-statistics' }" 
-              class="text-decoration-none"
-            >
-              <div class="glass-badge m-0">
-                <span>📊</span>
-                <span class="badge-text">통계 보러가기 →</span>
-              </div>
+            <router-link :to="{ name: 'short-url-statistics' }" class="router-link">
+              <GlassBadge 
+                icon="📊" 
+                text="통계 보러가기 →" 
+                class="m-0"
+              />
             </router-link>
           </div>
         </div>
@@ -48,7 +43,7 @@
       </div>
       
       <!-- 입력 영역 -->
-      <div class="glass-card input-container">
+      <div class="glass-card input-container fade-in">
         <div class="input-wrapper">
           <input 
             type="text" 
@@ -71,7 +66,7 @@
 
       <!-- 결과 영역 (애니메이션 적용) -->
       <transition name="slide-up">
-        <div v-if="shortUrl" class="glass-card result-container">
+        <div v-if="shortUrl" class="glass-card result-container fade-in">
           <div class="result-header">
             <span class="label">생성된 Short URL</span>
           </div>
@@ -96,8 +91,8 @@
 </template>
 
 <script>
-
 import {getShortUrls, createShortUrl} from '@/api/nexus-ui/short-url/shortUrl';
+import GlassBadge from '@/components/common/GlassBadge.vue';
 
 const DEF_URL_PARAM = {
   originUrl: "",
@@ -107,6 +102,10 @@ const DEF_URL_PARAM = {
 
 export default {
   name: 'ShortUrl',
+  
+  components: {
+    GlassBadge
+  },
   
   data: () => ({
     originUrl: '',  // 사용자 입력 URL
@@ -223,27 +222,6 @@ export default {
   margin-bottom: 56px;
 }
 
-/* 글래스 뱃지 */
-.glass-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin: 0.5rem 0.2rem 0.5rem 0.2rem;
-  animation: float 3s ease-in-out infinite;
-}
-
-.badge-text {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #1d1d1f;
-  text-decoration: none !important;
-}
 
 /* 페이지 타이틀 */
 .page-title {
@@ -256,13 +234,6 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 12px;
-}
-
-/* 그라데이션 텍스트 */
-.gradient-text {
-  background: linear-gradient(120deg, #0071E3, #00A8FF);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .title-icon {
@@ -278,29 +249,10 @@ export default {
 }
 
 /* ======================
-   3. 글래스 카드 (Glass Card)
-   ====================== */
-.glass-card {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
-  margin-bottom: 32px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-/* ======================
-   4. 입력 영역 (Input)
+   3. 입력 영역 (Input)
    ====================== */
 .input-container {
-  padding: 10px;
-}
-
-.input-container:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.06);
+  margin-bottom: 32px;
 }
 
 .input-wrapper {
@@ -336,7 +288,7 @@ export default {
   font-weight: 400;
 }
 
-/* 생성 버튼 */
+/* 생성 버튼 (변경하지 않음) */
 .generate-btn {
   background: #1d1d1f;
   color: white;
@@ -371,16 +323,11 @@ export default {
 }
 
 /* ======================
-   5. 결과 영역 (Result)
+   4. 결과 영역 (Result)
    ====================== */
 .result-container {
-  padding: 28px 36px;
-}
-
-.result-header {
-  margin-bottom: 16px;
-  border-bottom: 2px solid rgba(0,0,0,0.03);
-  padding-bottom: 12px;
+  margin-bottom: 32px;
+  padding: 32px; /* glass-card 기본 패딩 보완 */
 }
 
 .label {
@@ -457,29 +404,10 @@ export default {
 }
 
 /* ======================
-   6. 애니메이션 (Animations)
+   
+5. 반응형 (Responsive)
    ====================== */
-/* 로딩 스피너 */
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* 뱃지 플로팅 효과 */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-}
-
-/* 슬라이드 업 트랜지션 */
+   /* 슬라이드 업 트랜지션 */
 .slide-up-enter-active, .slide-up-leave-active {
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -487,10 +415,6 @@ export default {
   opacity: 0;
   transform: translateY(30px) scale(0.95);
 }
-
-/* ======================
-   7. 반응형 (Responsive)
-   ====================== */
 @media (max-width: 600px) {
   .page-title {
     font-size: 2.5rem;
@@ -533,3 +457,4 @@ export default {
   }
 }
 </style>
+

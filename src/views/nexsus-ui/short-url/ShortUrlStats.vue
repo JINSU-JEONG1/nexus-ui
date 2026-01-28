@@ -1,17 +1,33 @@
 <template>
   <!-- 통계 페이지 컨테이너 -->
   <div class="statistics-page">
-    <div class="content-wrapper">
+    <div class="content-wrapper fade-in">
       
       <!-- 헤더 영역 -->
       <div class="page-header">
-        <div class="glass-badge">
-          <span>📊</span>
-          <span class="badge-text">Analytics Dashboard</span>
+
+        <div class="row align-items-center mb-4">
+          <div class="col">
+            <GlassBadge icon="📊" text="Analytics Dashboard" class="m-0" />
+          </div>
         </div>
+
+        <div class="row align-items-center mb-4">
+          <div class="col">
+            <router-link :to="{ name: 'short-url' }" class="router-link">
+              <GlassBadge 
+              icon="✨" 
+              text="← 단축 URL 생성하기"
+              class="m-0"
+            />
+            </router-link>
+          </div>
+        </div>
+
         <h1 class="page-title">
           Short URL <span class="gradient-text">통계</span>
         </h1>
+
         <p class="page-subtitle">링크 생성 및 클릭 추이를 한눈에 확인하세요</p>
       </div>
 
@@ -43,7 +59,7 @@
       </div>
 
       <!-- 메인 차트 영역 -->
-      <div class="glass-card chart-container">
+      <div class="glass-card chart-container slide-up delay-1">
         <div class="chart-header">
           <h3 class="chart-title">{{ chartTitle }}</h3>
           <div v-if="selectedChartType === 'trend'" class="chart-legend">
@@ -88,64 +104,58 @@
         </div>
       </div>
         
-      <!-- KPI 카드 그리드 (Static) -->
-      <div class="kpi-grid">
-
+      <!-- KPI 카드 그리드 -->
+      <div class="row g-4 mb-5 slide-up delay-2">
         <!-- 전체 생성 링크 -->
-        <div class="glass-card kpi-card total-links">
-          <div class="kpi-icon">🔗</div>
-          <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.totalLinks }}</div>
-            <div class="kpi-label">전체 생성 링크</div>
-            <div class="kpi-change positive"></div>
-          </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl">
+          <KpiCard 
+            icon="🔗" 
+            :value="kpiData.totalLinks" 
+            label="전체 생성 링크" 
+            gradient="total-links" 
+          />
         </div>
 
         <!-- 전체 클릭수 -->
-        <div class="glass-card kpi-card total-clicks">
-          <div class="kpi-icon">👆</div>
-          <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.totalClicks }}</div>
-            <div class="kpi-label">전체 클릭수</div>
-            <div class="kpi-change positive"></div>
-          </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl">
+          <KpiCard 
+            icon="👆" 
+            :value="kpiData.totalClicks" 
+            label="전체 클릭수" 
+            gradient="total-clicks" 
+          />
         </div>
 
-        <!--오늘 클릭 수 -->
-        <div class="glass-card kpi-card today-created">
-          <div class="kpi-icon">📅</div>
-          <div class="kpi-content">
-            <div class="kpi-value">{{ kpiData.todayClicked }}</div>
-            <div class="kpi-label">오늘 클릭수</div>
-            <div class="kpi-change positive"></div>
-          </div>
+        <!-- 오늘 클릭수 -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl">
+          <KpiCard 
+            icon="📅" 
+            :value="kpiData.todayClicked" 
+            label="오늘 클릭수" 
+            gradient="today-created" 
+          />
         </div>
 
         <!-- 기간별 클릭수 -->
-        <div class="glass-card kpi-card period-clicks">
-          <div class="kpi-icon">🖱️</div>
-          <div class="kpi-content">
-            <div class="kpi-main-row">
-              <div class="kpi-value">{{ kpiData.currentClicks }}</div>
-              <div class="kpi-total-value">/ {{ kpiData.totalClicks }}</div>
-            </div>
-            <div class="kpi-label">{{ periodClicksLabel }}</div>
-            <div class="kpi-change positive"></div>
-          </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl">
+          <KpiCard 
+            icon="🖱️" 
+            :value="kpiData.currentClicks" 
+            :subValue="`/ ${kpiData.totalClicks}`"
+            :label="periodClicksLabel" 
+            gradient="period-clicks" 
+          />
         </div>
 
         <!-- 기간별 클릭률 증감률 -->
-        <div class="glass-card kpi-card avg-rate">
-          <div class="kpi-icon">📈</div>
-          <div class="kpi-content">
-            <div 
-              class="kpi-value" 
-              :style="{ color: kpiData.periodClicksChange >= 0 ? '#ff4d4f' : '#1890ff' }"
-            >
-              {{ kpiData.periodClicksChange >= 0 ? '↑' : '↓' }} {{ Math.abs(kpiData.periodClicksChange).toFixed(2) }}%
-            </div>
-            <div class="kpi-label">{{ periodDeltaText }}</div>
-          </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl">
+          <KpiCard 
+            icon="📈" 
+            :value="`${kpiData.periodClicksChange >= 0 ? '↑' : '↓'} ${Math.abs(kpiData.periodClicksChange).toFixed(2)}%`" 
+            :label="periodDeltaText" 
+            gradient="avg-rate"
+            :valueColor="kpiData.periodClicksChange >= 0 ? '#ff4d4f' : '#1890ff'"
+          />
         </div>
       </div>
     </div>
@@ -172,6 +182,8 @@ echarts.use([
 
 // import { AgGridVue } from 'ag-grid-vue'
 import { getKpiData, getTrendData, getUsageData } from '@/api/nexus-ui/short-url/shortUrl'
+import GlassBadge from '@/components/common/GlassBadge.vue';
+import KpiCard from '@/components/common/KpiCard.vue';
 
 // ============================================
 // Mock 데이터 (백엔드 연동 전 임시 데이터)
@@ -200,7 +212,9 @@ export default {
   name: 'ShortUrlStats',
   
   components: {
-    // AgGridVue
+    // AgGridVue,
+    GlassBadge,
+    KpiCard
   },
   
   data: () => ({
@@ -551,6 +565,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 /* 페이지 레이아웃 */
 .statistics-page {
@@ -572,24 +587,6 @@ export default {
   margin-bottom: 48px;
 }
 
-.glass-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
-}
-
-.badge-text {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #1d1d1f;
-}
-
 .page-title {
   font-size: 3rem;
   font-weight: 800;
@@ -598,29 +595,13 @@ export default {
   letter-spacing: -1px;
 }
 
-.gradient-text {
-  background: linear-gradient(120deg, #0071E3, #00A8FF);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .page-subtitle {
   font-size: 1.1rem;
   color: #6e6e73;
   font-weight: 400;
 }
 
-/* 글래스 카드 (이름은 유지하되 불투명 최적화) */
-.glass-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-  transition: box-shadow 0.3s ease;
-}
-
-/* 차트 타입 선택 */
+/* 차트 타입 선택 (버튼 - 변경하지 않음) */
 .chart-type-selector {
   display: flex;
   gap: 12px;
@@ -661,7 +642,7 @@ export default {
   font-size: 1.2rem;
 }
 
-/* 기간 선택 */
+/* 기간 선택 (버튼 - 변경하지 않음) */
 .period-selector {
   display: flex;
   gap: 8px;
@@ -694,180 +675,6 @@ export default {
   color: white;
 }
 
-/* 차트 컨테이너 */
-.chart-container {
-  padding: 32px;
-  margin-bottom: 32px;
-}
-
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.chart-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1d1d1f;
-  margin: 0;
-}
-
-.chart-legend {
-  display: flex;
-  gap: 24px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: #6e6e73;
-}
-
-.legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.legend-dot.blue {
-  background: #0071E3;
-}
-
-.legend-dot.red {
-  background: #FF3B30;
-}
-
-.chart-content,
-.full-size {
-  width: 100%;
-  height: 100%;
-}
-
-.chart-body {
-  width: 100%;
-  height: 400px;
-}
-
-/* KPI 카드 그리드 */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  contain: content; /* 렌더링 최적화 힌트 */
-}
-
-.kpi-card {
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  position: relative;
-  overflow: hidden;
-  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 그라데이션 배경 오버레이 */
-.kpi-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--card-gradient);
-  opacity: 0.12;
-  transition: opacity 0.3s ease;
-  z-index: 0;
-}
-
-.kpi-card:hover::before {
-  opacity: 0.2;
-}
-
-.kpi-card:hover {
-  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px);
-}
-
-/* 카드 내부 요소 z-index */
-.kpi-icon,
-.kpi-content {
-  position: relative;
-  z-index: 1;
-}
-
-.kpi-icon {
-  font-size: 2.5rem;
-  flex-shrink: 0;
-}
-
-.kpi-content {
-  flex: 1;
-}
-
-.kpi-value {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #1d1d1f;
-  margin-bottom: 4px;
-}
-
-/* 기간별 클릭수 카드의 메인 로우 (현재 수치 + 전체 수치) */
-.kpi-main-row {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-
-/* 전체 수치 - 작고 옅게 */
-.kpi-total-value {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #b0b0b5;
-}
-
-
-.kpi-label {
-  font-size: 0.9rem;
-  color: #86868b;
-  margin-bottom: 8px;
-}
-
-.kpi-change {
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.kpi-change.positive {
-  color: #34C759;
-}
-
-.kpi-change.negative {
-  color: #FF3B30;
-}
-
-/* 증감률 절대 변화량 텍스트 (예: (전주 대비 +78)) */
-.kpi-delta {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #6e6e73;
-  margin-top: 4px;
-}
-
-
-/* 애니메이션 */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-}
-
 /* Stagger 애니메이션 */
 .stagger-enter-active {
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -885,14 +692,6 @@ export default {
     font-size: 2.2rem;
   }
   
-  .chart-container {
-    padding: 20px;
-  }
-  
-  .chart-body {
-    height: 300px;
-  }
-  
   .chart-type-selector,
   .period-selector {
     flex-direction: column;
@@ -905,40 +704,6 @@ export default {
   .period-btn {
     max-width: 100%;
   }
-  
-  .kpi-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* KPI 카드 그라데이션 */
-.kpi-card.total-links { --card-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-.kpi-card.today-created { --card-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-.kpi-card.total-clicks { --card-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-.kpi-card.period-clicks { --card-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-.kpi-card.avg-rate { --card-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-
-/* 데이터 없음 상태 */
-.no-data-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #86868b;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 16px;
-}
-
-.no-data-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
-  opacity: 0.5;
-}
-
-.no-data-text {
-  font-size: 1.1rem;
-  font-weight: 500;
 }
 </style>
+
