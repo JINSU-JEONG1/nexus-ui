@@ -185,29 +185,6 @@ import { getKpiData, getTrendData, getUsageData } from '@/api/nexus-ui/short-url
 import GlassBadge from '@/components/common/GlassBadge.vue';
 import KpiCard from '@/components/common/KpiCard.vue';
 
-// ============================================
-// Mock 데이터 (백엔드 연동 전 임시 데이터)
-// ============================================
-
-
-const MOCK_TREND_DATA = {
-  day: {
-    labels: ['월', '화', '수', '목', '금', '토', '일'],
-    created: [12, 8, 15, 42, 58, 35, 18],
-    clicks: [45, 32, 68, 125, 178, 142, 89]
-  },
-  week: {
-    labels: ['1주차', '2주차', '3주차', '4주차'],
-    created: [45, 52, 48, 61, 78, 42, 38],
-    clicks: [523, 612, 587, 734, 892, 456, 398]
-  },
-  month: {
-    labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-    created: [234, 287, 312, 298, 234, 287, 312, 298, 234, 287, 312, 298],
-    clicks: [2876, 3421, 3687, 3542, 2876, 3421, 3687, 3542, 2876, 3421, 3687, 3542]
-  }
-}
-
 export default {
   name: 'ShortUrlStats',
   
