@@ -11,14 +11,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Error404',
-  methods: {
-    goHome() {
-      this.$router.push('/')
-    }
-  }
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goHome = () => {
+  router.push('/')
 }
 </script>
 

@@ -20,57 +20,51 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'KpiCard',
-  props: {
-    icon: {
-      type: String,
-      required: true
-    },
-    value: {
-      type: [String, Number],
-      required: true
-    },
-    subValue: {
-      type: String,
-      default: ''
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    gradient: {
-      type: String,
-      default: ''
-    },
-    change: {
-      type: Object,
-      default: null
-      // { value: '+12%', type: 'positive' | 'negative' }
-    },
-    valueColor: {
-      type: String,
-      default: ''
-    }
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true
   },
-  computed: {
-    gradientClass() {
-      return this.gradient || ''
-    },
-    valueStyle() {
-      return this.valueColor ? { color: this.valueColor } : {}
-    }
+  value: {
+    type: [String, Number],
+    required: true
+  },
+  subValue: {
+    type: String,
+    default: ''
+  },
+  label: {
+    type: String,
+    required: true
+  },
+  gradient: {
+    type: String,
+    default: ''
+  },
+  change: {
+    type: Object,
+    default: null
+    // { value: '+12%', type: 'positive' | 'negative' }
+  },
+  valueColor: {
+    type: String,
+    default: ''
   }
-}
+})
+
+const gradientClass = computed(() => props.gradient || '')
+const valueStyle = computed(() => props.valueColor ? { color: props.valueColor } : {})
 </script>
 
 <style scoped>
 .kpi-card {
-  padding: 24px;
+  padding: 20px; /* 24px -> 20px */
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px; /* 16px -> 12px */
   position: relative;
   overflow: hidden;
 }
@@ -93,7 +87,7 @@ export default {
 }
 
 .kpi-icon {
-  font-size: 2.5rem;
+  font-size: 2.2rem; /* 2.5rem -> 2.2rem */
   flex-shrink: 0;
   position: relative;
   z-index: 1;
@@ -106,8 +100,8 @@ export default {
 }
 
 .kpi-value {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.3rem;
+  font-weight: 750;
   color: var(--color-text, #1d1d1f);
   margin-bottom: 4px;
 }

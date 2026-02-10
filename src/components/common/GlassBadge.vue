@@ -7,24 +7,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'GlassBadge',
-  props: {
-    icon: {
-      type: String,
-      default: ''
-    },
-    text: {
-      type: String,
-      default: ''
-    },
-    floating: {
-      type: Boolean,
-      default: true
-    }
+<script setup>
+defineProps({
+  icon: {
+    type: String,
+    default: ''
+  },
+  text: {
+    type: String,
+    default: ''
+  },
+  floating: {
+    type: Boolean,
+    default: true
   }
-}
+})
 </script>
 
 <style scoped>

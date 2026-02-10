@@ -15,20 +15,17 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProjectCard',
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      required: true
-    }
+<script setup>
+defineProps({
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
   }
-}
+})
 </script>
 
 <style scoped>

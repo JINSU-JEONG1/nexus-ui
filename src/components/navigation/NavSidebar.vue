@@ -41,16 +41,12 @@
   </aside>
 </template>
 
-<script>
-export default {
-  name: 'NavSidebar',
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: true
-    }
+<script setup>
+defineProps({
+  isOpen: {
+    type: Boolean,
+    default: true
   }
-}
+})
 </script>
-
 

@@ -22,28 +22,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import Header from '@/components/navigation/NavHeader.vue'
 import Footer from '@/components/navigation/NavFooter.vue'
 // import Sidebar from '@/components/navigation/NavSidebar.vue'
 
-export default {
-  name: 'DefaultLayout',
-  components: {
-    Header,
-    Footer,
-    // Sidebar 
-  },
-  data() {
-    return {
-      isSidebarOpen: false
-    }
-  },
-  methods: {
-    toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen
-    }
-  }
+const isSidebarOpen = ref(false)
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value
 }
 </script>
 

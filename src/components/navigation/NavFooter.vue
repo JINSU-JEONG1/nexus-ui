@@ -6,10 +6,8 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'NavFooter'
-}
+<script setup>
+// No props or state needed
 </script>
 
 

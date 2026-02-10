@@ -7,15 +7,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-
-export default {
-  name: 'App',
-  components: {
-    DefaultLayout
-  }
-}
 </script>
 
 <style>
