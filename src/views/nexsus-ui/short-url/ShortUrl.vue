@@ -1,196 +1,172 @@
 <template>
-  <!-- 전체 페이지 컨테이너 -->
-  <div class="short-url-page">
-    <div class="content-wrapper">
+  <div>
+    <!-- 전체 페이지 컨테이너 -->
+    <div class="short-url-page">
+      <div class="content-wrapper">
 
-      <!-- 헤더 영역: 뱃지 + 타이틀 + 설명 -->
-      <div class="page-header fade-in">
-        <!-- 뱃지 영역: 부트스트랩 그리드로 위치 조정 -->
-        <div class="row align-items-center mb-4">
-          <div class="col">
-            <GlassBadge icon="✨" text="Free Link Shortener" class="m-0" />
+        <!-- 헤더 영역: 뱃지 + 타이틀 + 설명 -->
+        <div class="page-header fade-in">
+          <!-- 뱃지 영역: 부트스트랩 그리드로 위치 조정 -->
+          <div class="row align-items-center mb-4">
+            <div class="col">
+              <GlassBadge icon="✨" text="Free Link Shortener" class="m-0" />
+            </div>
           </div>
-        </div>
-        <div class="row align-items-center mb-4">
-          <div class="col">
-            <router-link :to="{ name: 'short-url-statistics' }" class="router-link">
-              <GlassBadge 
-                icon="📊" 
-                text="통계 보러가기 →" 
-                class="m-0"
-              />
-            </router-link>
+          <div class="row align-items-center mb-4">
+            <div class="col">
+              <router-link :to="{ name: 'short-url-statistics' }" class="router-link">
+                <GlassBadge 
+                  icon="📊" 
+                  text="통계 보러가기 →" 
+                  class="m-0"
+                />
+              </router-link>
+            </div>
           </div>
-        </div>
-      
-
-        <!-- 메인 타이틀 -->
-        <h1 class="page-title">
-          Short <span class="gradient-text">URL</span>
-          <!-- SVG 아이콘 -->
-          <svg class="title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.828 10.172L16.657 7.34315C18.2191 5.78105 18.2191 3.24838 16.657 1.68629C15.0949 0.124194 12.5622 0.124194 11 1.68629L8.17157 4.51472M10.172 13.828L7.34315 16.657C5.78105 18.2191 3.24838 18.2191 1.68629 16.657C0.124194 15.0949 0.124194 12.5622 1.68629 11L4.51472 8.17157M7.34315 7.34315L16.657 16.657" stroke="url(#paint0_linear)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <defs>
-              <linearGradient id="paint0_linear" x1="1.68629" y1="1.68629" x2="16.657" y2="16.657" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#0071E3"/>
-                <stop offset="1" stop-color="#00A8FF"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </h1>
         
-        <p class="page-subtitle">긴 URL을 짧고 간결하게 줄여보세요.</p>
-      </div>
-      
-      <!-- 입력 영역 -->
-      <div class="glass-card input-container fade-in">
-        <div class="input-wrapper">
-          <input 
-            type="text" 
-            class="url-input" 
-            v-model="originUrl"
-            placeholder="https://example.com/very/long/url..."
-            @keyup.enter="createShortUrl"
-            :disabled="isLoading"
-          />
-          <button 
-            class="generate-btn" 
-            :disabled="!isValidUrl || isLoading"
-            @click="createShortUrl"
-          >
-            <span v-if="isLoading" class="spinner"></span>
-            <span v-else>단축하기</span>
-          </button>
-        </div>
-      </div>
 
-      <!-- 결과 영역 (애니메이션 적용) -->
-      <transition name="slide-up">
-        <div v-if="shortUrl" class="glass-card result-container fade-in">
-          <div class="result-header">
-            <span class="label">생성된 Short URL</span>
-          </div>
-          <div class="result-body">
-            <div class="short-url-display">
-              <a :href="shortUrl" target="_blank" class="short-link">{{ shortUrl }}</a>
-            </div>
-            <div class="action-buttons">
-              <button class="action-btn" @click="copyToClipboard">
-                📋 복사
-              </button>
-              <button class="action-btn go-btn" @click="goToUrl">
-                🚀 이동
-              </button>
-            </div>
+          <!-- 메인 타이틀 -->
+          <h1 class="page-title">
+            Short <span class="gradient-text">URL</span>
+            <!-- SVG 아이콘 -->
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.828 10.172L16.657 7.34315C18.2191 5.78105 18.2191 3.24838 16.657 1.68629C15.0949 0.124194 12.5622 0.124194 11 1.68629L8.17157 4.51472M10.172 13.828L7.34315 16.657C5.78105 18.2191 3.24838 18.2191 1.68629 16.657C0.124194 15.0949 0.124194 12.5622 1.68629 11L45.14 8.17157M7.34315 7.34315L16.657 16.657" stroke="url(#paint0_linear)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="paint0_linear" x1="1.68629" y1="1.68629" x2="16.657" y2="16.657" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0071E3"/>
+                  <stop offset="1" stop-color="#00A8FF"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </h1>
+          
+          <p class="page-subtitle">긴 URL을 짧고 간결하게 줄여보세요.</p>
+        </div>
+        
+        <!-- 입력 영역 -->
+        <div class="glass-card input-container fade-in">
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              class="url-input" 
+              v-model="originUrl"
+              placeholder="https://example.com/very/long/url..."
+              @keyup.enter="createShortUrl"
+              :disabled="isLoading"
+            />
+            <button 
+              class="generate-btn" 
+              :disabled="!isValidUrl || isLoading"
+              @click="createShortUrl"
+            >
+              <span v-if="isLoading" class="spinner"></span>
+              <span v-else>단축하기</span>
+            </button>
           </div>
         </div>
-      </transition>
 
+        <!-- 결과 영역 (애니메이션 적용) -->
+        <transition name="slide-up">
+          <div v-if="shortUrl" class="glass-card result-container fade-in">
+            <div class="result-header">
+              <span class="label">생성된 Short URL</span>
+            </div>
+            <div class="result-body">
+              <div class="short-url-display">
+                <a :href="shortUrl" target="_blank" class="short-link">{{ shortUrl }}</a>
+              </div>
+              <div class="action-buttons">
+                <button class="action-btn" @click="copyToClipboard">
+                  📋 복사
+                </button>
+                <button class="action-btn go-btn" @click="goToUrl">
+                  🚀 이동
+                </button>
+              </div>
+            </div>
+          </div>
+        </transition>
+
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-import {getShortUrls, createShortUrl} from '@/api/nexus-ui/short-url/shortUrl';
-import GlassBadge from '@/components/common/GlassBadge.vue';
+<script setup>
+import { ref, computed } from 'vue'
+import { useToast } from 'vue-toastification'
+import { createShortUrl as createShortUrlApi } from '@/api/nexus-ui/short-url/shortUrl'
+import GlassBadge from '@/components/common/GlassBadge.vue'
 
-const DEF_URL_PARAM = {
-  originUrl: "",
-  shortUrl: "",
-  expiredAt: "",
+const toast = useToast()
+
+// State
+const originUrl = ref('')
+const shortUrl = ref('')
+const isLoading = ref(false)
+
+// Computed
+const isValidUrl = computed(() => {
+  if (!originUrl.value) return false
+  const urlPattern = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/
+  return urlPattern.test(originUrl.value.trim())
+})
+
+// Methods
+const createShortUrl = async () => {
+  if (!originUrl.value) return
+  
+  // URL 형식 검증
+  if (!isValidUrl.value) {
+    toast.error('올바른 URL 형식을 입력해주세요. (예: https://example.com)')
+    return
+  }
+
+  const requestPayload = {
+    data: {
+      originUrl: originUrl.value
+    }
+  }
+
+  console.log("전송 데이터 : ", requestPayload)
+  
+  try {
+    isLoading.value = true
+    shortUrl.value = ''
+    
+    const res = await createShortUrlApi(requestPayload)
+    console.log("res : ", res)
+    
+    shortUrl.value = res.data.shortUrl
+
+  } catch (error) {
+    console.error('Short URL 생성 실패:', error)
+    toast.error('Short URL 생성에 실패했습니다.')
+  } finally {
+    isLoading.value = false
+  }
 }
 
-export default {
-  name: 'ShortUrl',
+const copyToClipboard = async () => {
+  if (!shortUrl.value) return
   
-  components: {
-    GlassBadge
-  },
-  
-  data: () => ({
-    originUrl: '',  // 사용자 입력 URL
-    shortUrl: '',     // 생성된 단축 URL
-    isLoading: false  // 로딩 상태
-  }),
-  
-  computed: {
-    // URL 형식 검증
-    isValidUrl() {
-      if (!this.originUrl) return false;
-      
-      const urlPattern = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
-      return urlPattern.test(this.originUrl.trim());
-    }
-  },
-  
-  methods: {
-    // URL 단축하기 (현재는 랜덤 생성, 추후 API 연동 예정)
-    async createShortUrl() {
-      const _vm = this;
-
-      if (!_vm.originUrl) return;
-      
-      // URL 형식 검증
-      if (!_vm.isValidUrl) {
-        _vm.$toast.error('올바른 URL 형식을 입력해주세요. (예: https://example.com)');
-        return;
-      }
-
-      const requestPayload = {
-        data: {
-          originUrl: _vm.originUrl
-        }
-      };
-
-      console.log("전송 데이터 : ", requestPayload);
-      
-      try {
-        _vm.isLoading = true;
-        _vm.shortUrl = '';
-        
-        const res = await createShortUrl(requestPayload);
-        console.log("res : ", res);
-        
-        _vm.shortUrl = res.data.shortUrl; 
-
-      } catch (error) {
-        console.error('Short URL 생성 실패:', error);
-        _vm.$toast.error('Short URL 생성에 실패했습니다.');
-      } finally {
-        _vm.isLoading = false;
-      }
-    },
-    
-    // 클립보드에 복사하기
-    async copyToClipboard() {
-      const _vm = this;
-
-      if (!_vm.shortUrl) return
-      
-      try {
-        await navigator.clipboard.writeText(_vm.shortUrl)
-        _vm.$toast.success('클립보드에 복사되었습니다!')
-      } catch {
-        // 구형 브라우저 대응
-        const textArea = document.createElement("textarea")
-        textArea.value = _vm.shortUrl
-        document.body.appendChild(textArea)
-        textArea.select()
-        document.execCommand('copy')
-        document.body.removeChild(textArea)
-        _vm.$toast.success('클립보드에 복사되었습니다!')
-      }
-    },
-    
-    // 새 탭에서 URL 열기
-    goToUrl() {
-      const _vm = this; 
-      if (_vm.shortUrl) window.open(_vm.shortUrl, '_blank')
-    },
-    
-    // 랜덤 문자열 생성 (단축 코드용)
-    generateRandomString: () => Math.random().toString(36).substring(2, 8)
+  try {
+    await navigator.clipboard.writeText(shortUrl.value)
+    toast.success('클립보드에 복사되었습니다!')
+  } catch {
+    // 구형 브라우저 대응
+    const textArea = document.createElement("textarea")
+    textArea.value = shortUrl.value
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    toast.success('클립보드에 복사되었습니다!')
   }
+}
+
+const goToUrl = () => {
+  if (shortUrl.value) window.open(shortUrl.value, '_blank')
 }
 </script>
 
@@ -201,7 +177,7 @@ export default {
 .short-url-page {
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 3rem; /* 80px -> 4rem (스케일에 따라 유동적) */
   min-height: 80vh;
 }
 
@@ -222,7 +198,7 @@ export default {
 
 /* 페이지 타이틀 */
 .page-title {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 800;
   margin: 0 0 16px 0;
   color: #1d1d1f;
@@ -240,7 +216,7 @@ export default {
 }
 
 .page-subtitle {
-  font-size: 1.15rem;
+  font-size: 1.0rem;
   color: #6e6e73;
   font-weight: 400;
 }
@@ -408,7 +384,7 @@ export default {
 .slide-up-enter-active, .slide-up-leave-active {
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.slide-up-enter, .slide-up-leave-to {
+.slide-up-enter-from, .slide-up-leave-to {
   opacity: 0;
   transform: translateY(30px) scale(0.95);
 }
@@ -454,4 +430,3 @@ export default {
   }
 }
 </style>
-

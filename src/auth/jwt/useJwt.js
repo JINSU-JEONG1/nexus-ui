@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+// 환경변수
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 /**
  * JWT 인증을 위한 axios 인스턴스 생성
  * @param {Object} axiosInstance - axios 인스턴스 (선택사항)
@@ -9,7 +12,7 @@ import axios from 'axios'
 function useJwt(axiosInstance = null, config = {}) {
   // axios 인스턴스 생성 또는 기존 인스턴스 사용
   const axiosIns = axiosInstance || axios.create({
-    baseURL: config.baseURL || process.env.VITE_API_BASE_URL || '',
+    baseURL: config.baseURL || API_BASE_URL,
     timeout: config.timeout || 10000,
     headers: {
       'Content-Type': 'application/json'

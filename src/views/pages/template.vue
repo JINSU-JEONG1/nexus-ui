@@ -2,42 +2,24 @@
   <div></div>
 </template>
 
-<script>
-import cmmUtils from '@/mixins/cmmUtils';
-import Ripple from 'vue-ripple-directive'
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-export default {
-  name: '',
-  mixins: [cmmUtils],  
-  components : {
-    
-  },
-  props: {
+// State
+// const data = ref(null)
 
-  },
-  directives: {
-    Ripple
-  },
-  watch: {
-    
-  },
-  data(){
-    return {
-      
-    }
-  },
-  mounted(){
-    const _vm = this;    
-    
-  },
-  beforeDestroy(){
-    const _vm = this;
-	},
-  methods: {
-    onSearch(){
-      const _vm = this;      
-    }
-  }  
+// Lifecycle
+onMounted(() => {
+  //  Initialization code
+})
+
+onBeforeUnmount(() => {
+  // Cleanup code
+})
+
+// Methods
+const onSearch = () => {
+  // Search logic
 }
 </script>
 

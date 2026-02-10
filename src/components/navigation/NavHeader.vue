@@ -31,16 +31,13 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'NavHeader',
-  props: {
-    isSidebarOpen: {
-      type: Boolean,
-      default: true
-    }
+<script setup>
+defineProps({
+  isSidebarOpen: {
+    type: Boolean,
+    default: true
   }
-}
+})
 </script>
 
 <style scoped>
@@ -56,11 +53,12 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* 미세한 그림자 추가 */
 }
 
+
 .header-content {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 24px;
+  padding: 10px 20px; /* 14px 24px -> 10px 20px */
   max-width: 100%;
   margin: 0 auto;
 }
@@ -92,7 +90,7 @@ export default {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px; /* 10px -> 8px */
   transition: opacity 0.2s ease;
   padding: 4px 0;
 }
@@ -103,14 +101,14 @@ export default {
 
 /* 로고 아이콘 */
 .logo-icon {
-  width: 28px;
-  height: 28px;
+  width: 24px; /* 28px -> 24px */
+  height: 24px; /* 28px -> 24px */
   flex-shrink: 0;
 }
 
 /* 로고 텍스트 */
 .logo-text {
-  font-size: 21px;
+  font-size: 18px; /* 21px -> 18px */
   font-weight: 600;
   letter-spacing: -0.5px;
   color: #1d1d1f;

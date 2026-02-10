@@ -1,9 +1,12 @@
 import axios from 'axios';
-import store from '@/store';
+
+// 환경변수
+const API_BASE_URL = import.meta.env.VITE_API_BASE_API || '/api';
+const IS_DEV = import.meta.env.MODE === 'development';
 
 // Axios 인스턴스 생성 - 백엔드 API와 통신하기 위한 기본 설정
 const service = axios.create({
-    baseURL: process.env.VITE_API_BASE_API || '/api', // nginx에서 프록시된 경로
+    baseURL: API_BASE_URL, // nginx에서 프록시된 경로
     timeout: 15000, // 요청 타임아웃 (15초)
     headers: {
         'Content-Type': 'application/json',
@@ -20,7 +23,7 @@ service.interceptors.request.use(
         // }
 
         // 요청 로깅 (개발 환경에서만)
-        if (process.env.NODE_ENV === 'development') {
+        if (IS_DEV) {
             console.log('🚀 Request:', config.method?.toUpperCase(), config.url);
         }
 
@@ -50,7 +53,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         // 응답 로깅 (개발 환경에서만)
-        if (process.env.NODE_ENV === 'development') {
+        if (IS_DEV) {
             console.log('✅ Response:', response.config.url, response.status);
         }
 

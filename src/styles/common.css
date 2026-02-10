@@ -1,3 +1,23 @@
+/* 전체 UI 크기 조정 - html font-size 기준 (더 작게 조정) */
+html {
+  /* 데스크톱: 기본 16px의 85% ≈ 13.6px */
+  font-size: 85%;
+}
+
+/* 태블릿 반응형 */
+@media (max-width: 1024px) {
+  html {
+    font-size: 82%;
+  }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  html {
+    font-size: 80%;
+  }
+}
+
 /* CSS Variables - Apple Grey/Monochrome Theme */
 :root {
   --color-text: #1d1d1f;
@@ -11,7 +31,7 @@
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-light: rgba(0, 0, 0, 0.05);
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --max-width: 1200px;
+  --max-width: 1000px;
   --transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   --transition-fast: all 0.2s ease;
   --border-radius: 12px;
@@ -81,24 +101,6 @@ body {
   }
 }
 
-/* Header */
-/* Header */
-.app-header {
-  position: relative;
-  top: 0;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
-  /* backdrop-filter 제거 */
-  border-bottom: 1px solid var(--color-border);
-}
-
-.header-content {
-  margin: 0 auto;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
 
 .menu-toggle {
   background: transparent;
@@ -410,7 +412,7 @@ body {
 
 .chart-body {
   width: 100%;
-  height: 400px;
+  height: 320px; /* 400px -> 320px */
 }
 
 .chart-content,

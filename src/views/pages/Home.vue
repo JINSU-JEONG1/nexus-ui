@@ -1,12 +1,12 @@
 <template>
   <div class="home-page">
     <div class="page-header fade-in">
-      <h1 class="page-title">프로젝트</h1>
-      <p class="page-subtitle">Nexus UI에서 제공하는 다양한 서비스를 이용해보세요</p>
+      <h1 class="page-title">Nexus Hub</h1>
+      <p class="page-subtitle">다양한 스마트 도구들을 한곳에서 경험해보세요.</p>
     </div>
 
     <div class="row g-4 slide-up delay-1">
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-lg-4">
         <router-link :to="{ name: 'short-url' }" class="router-link">
           <ProjectCard
             title="Short URL"
@@ -25,15 +25,8 @@
   </div>
 </template>
 
-<script>
-import ProjectCard from '@/components/common/ProjectCard.vue';
-
-export default {
-  name: 'HomePage',
-  components: {
-    ProjectCard
-  }
-}
+<script setup>
+import ProjectCard from '@/components/common/ProjectCard.vue'
 </script>
 
 <style scoped>
@@ -53,7 +46,7 @@ export default {
 }
 
 .page-title {
-  font-size: 48px;
+  font-size: 38px;
   font-weight: 700;
   color: var(--color-text);
   margin: 0 0 16px 0;
@@ -65,7 +58,7 @@ export default {
 }
 
 .page-subtitle {
-  font-size: 21px;
+  font-size: 17px;
   line-height: 1.4;
   color: var(--color-text-secondary);
   margin: 0;
